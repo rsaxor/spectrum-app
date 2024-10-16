@@ -17,7 +17,7 @@ import { toast } from "../components/hooks/use-toast";
 import { Toaster } from "../components/ui/toaster";
 
 const Login = () => {
-    const [email, setEmail] = useState('');
+    const [emailOrUsername, setEmailOrUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();  // For redirecting after login
     const apiURL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
@@ -25,7 +25,13 @@ const Login = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${apiURL}/users/login`, { email, password });
+            // Dynamically decide whether email or username is provided
+            const loginData: { email?: string; username?: string; password: string } = emailOrUsername.includes('@')
+                ? { email: emailOrUsername, password }  // If '@' is present, treat it as an email
+                : { username: emailOrUsername, password };  // Otherwise, treat it as a username
+
+
+            const response = await axios.post(`${apiURL}/users/login`, loginData);
             const { token, user } = response.data;
     
             // Store the token in localStorage or cookies
@@ -55,18 +61,18 @@ const Login = () => {
                 <CardHeader>
                     <CardTitle className="text-2xl">Login</CardTitle>
                     <CardDescription>
-                        Enter your email below to login to your account.
+                        Enter your email/username below to login to your account.
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="grid gap-4">
                     <form onSubmit={handleSubmit}>
                         <div className="grid gap-2">
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="email">Email/Username</Label>
                             <Input
                                 id="email"
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                type="text"
+                                value={emailOrUsername}
+                                onChange={(e) => setEmailOrUsername(e.target.value)}
                                 required
                             />
                         </div>
