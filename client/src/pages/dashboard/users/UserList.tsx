@@ -3,48 +3,49 @@ import DashboardLayout from "../../../components/layouts/DashboardLayout"; // Im
 import Settings from "../../../components/layouts/Settings"; // Import the layout
 import axios from 'axios';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "../../../components/ui/card";
-import { Button } from "../../../components/ui/button";
 import { User, NewUser } from '../../../types';
 import {
-  File,
-  Home,
-  LineChart,
-  ListFilter,
-  MoreHorizontal,
-  Package,
-  Package2,
-  PanelLeft,
-  PlusCircle,
-  Search,
-  ShoppingCart,
-  Users2,
+	MoreHorizontal,
 } from "lucide-react"
 import { Badge } from "../../../components/ui/badge"
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+	DropdownMenu,
+	DropdownMenuCheckboxItem,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu"
 
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
 } from "../../../components/ui/table"
+import { Button } from "../../../components/ui/button";
+import { Input } from "../../../components/ui/input"
+import { Label } from "../../../components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../components/ui/select";
+
+import {
+	Dialog,
+	DialogClose,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "../../../components/ui/dialog"
 
 const UserList = () => {
+	const [editingUser, setEditingUser] = useState<User | null>(null); // State for the user being edited
 	const [users, setUsers] = useState<User[]>([]);
-	const [email, setEmail] = useState('');
-	const [username, setUsername] = useState('');
-	const [password, setPassword] = useState('');
-	const [role, setRole] = useState<'user' | 'admin'>('user');
+	const [password, setPassword] = useState<string>(''); // Separate state for password
 	const apiURL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
 
 	useEffect(() => {
@@ -56,12 +57,56 @@ const UserList = () => {
 	}, []);
 
 	const handleDeleteUser = async (id: string) => {
-		const apiURL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
-
 		await axios.delete(`${apiURL}/users/${id}`);
 		setUsers(users.filter(user => user._id !== id));
 	};
-	
+
+	const handleEditUser = (user: User) => {
+		setEditingUser(user);
+		setPassword('');
+	};
+
+	const handleRoleChange = (newRole: string) => {
+		if (editingUser) {
+			setEditingUser({
+				...editingUser,
+				role: newRole,
+			});
+		}
+	};
+
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (editingUser) {
+			setEditingUser({
+				...editingUser,
+				[e.target.name]: e.target.value,
+			});
+		}
+	};
+
+	const handleSaveChanges = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault(); // Prevent the default form submission
+
+		// Create an object with the user updates
+		const updatedUser = { ...editingUser };
+
+		// If password is not empty, include it in the update, otherwise omit it
+		if (password) {
+			updatedUser.password = password;
+		} else {
+			delete updatedUser.password; // Remove the password key if it's empty
+		}
+
+		if (editingUser) {
+			await axios.put(`${apiURL}/users/${editingUser._id}`, updatedUser);
+			setUsers(
+				users.map(user =>
+					user._id === editingUser._id ? (updatedUser as User) : user
+				)
+			);
+			setEditingUser(null); // Close the dialog
+		}
+	};
 
 	return (
 		<DashboardLayout pageTitle="User List"> {/* Wrap content inside the layout */}
@@ -124,7 +169,9 @@ const UserList = () => {
 													</DropdownMenuTrigger>
 													<DropdownMenuContent align="end">
 														<DropdownMenuLabel>Actions</DropdownMenuLabel>
-														<DropdownMenuItem>Edit</DropdownMenuItem>
+														<DropdownMenuItem onClick={() => handleEditUser(user)}>
+															Edit
+														</DropdownMenuItem>
 														<DropdownMenuItem onClick={() => handleDeleteUser(user._id)}>
 															Delete
 														</DropdownMenuItem>
@@ -144,6 +191,81 @@ const UserList = () => {
 					</Card>
 				</Settings>
 			</div>
+
+			{/* Dialog for editing user */}
+			{editingUser && (
+				<Dialog open={!!editingUser} onOpenChange={() => setEditingUser(null)}>
+					<DialogContent className="sm:max-w-[425px]">
+						<DialogHeader>
+							<DialogTitle>Edit profile</DialogTitle>
+							<DialogDescription>
+								Make changes to your profile here. Click save when you're done.
+							</DialogDescription>
+						</DialogHeader>
+						<form onSubmit={handleSaveChanges}>
+							<div className="grid gap-4 py-4">
+								<div className="grid grid-cols-4 items-center gap-4">
+									<Label htmlFor="email" className="text-right">
+										Email
+									</Label>
+									<Input
+										id="email"
+										name="email"
+										type="email"
+										required
+										value={editingUser.email}
+										onChange={handleInputChange}
+										className="col-span-3"
+									/>
+								</div>
+								<div className="grid grid-cols-4 items-center gap-4">
+									<Label htmlFor="username" className="text-right">
+										Username
+									</Label>
+									<Input
+										id="username"
+										name="username"
+										required
+										value={editingUser.username}
+										onChange={handleInputChange}
+										className="col-span-3"
+									/>
+								</div>
+								<div className="grid grid-cols-4 items-center gap-4">
+									<Label htmlFor="password" className="text-right">
+										Password
+									</Label>
+									<Input
+										placeholder="leave blank to keep same password"
+										id="password"
+										name="password"
+										type="password"
+										value={password}
+										onChange={(e) => setPassword(e.target.value)}
+										className="col-span-3"
+									/>
+								</div>
+								<div className="grid grid-cols-4 items-center gap-4">
+									<Label htmlFor="" className="text-right">Role</Label>
+									<Select onValueChange={handleRoleChange} defaultValue={editingUser.role}>
+										<SelectTrigger>
+											<SelectValue placeholder="Select role" />
+										</SelectTrigger>
+										<SelectContent>
+											<SelectItem value="admin">Admin</SelectItem>
+											<SelectItem value="user">User</SelectItem>
+										</SelectContent>
+									</Select>
+								</div>
+							</div>
+							<DialogFooter>
+								<Button type="button" onClick={() => setEditingUser(null)}>Cancel</Button>
+								<Button type="submit">Save changes</Button>
+							</DialogFooter>
+						</form>
+					</DialogContent>
+				</Dialog>
+			)}
 		</DashboardLayout>
 	);
 }
