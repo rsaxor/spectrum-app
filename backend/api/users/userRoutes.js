@@ -22,22 +22,28 @@ router.post('/', async (req, res) => {
 
 // Login route
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+  const { email, username, password } = req.body;
+
   try {
-      const user = await User.findOne({ email });
-      if (!user) {
-          return res.status(400).json({ message: 'Invalid email or password' });
-      }
+    // Check if either email or username is provided, and search based on that
+    const user = await User.findOne({
+      $or: [{ email }, { username }]
+    });
 
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-          return res.status(400).json({ message: 'Invalid email or password' });
-      }
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid email/username or password' });
+    }
 
-      const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
-      res.json({ token, user });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid email/username or password' });
+    }
+
+    const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+    res.json({ token, user });
+
   } catch (error) {
-      res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 });
 
