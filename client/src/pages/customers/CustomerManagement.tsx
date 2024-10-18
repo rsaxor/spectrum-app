@@ -115,9 +115,9 @@ const CustomerManagement = () => {
         <form onSubmit={handleSaveCustomer}>
           <Card x-chunk="dashboard-04-chunk-1">
             <CardHeader>
-              <CardTitle>Add a Customer</CardTitle>
+              <CardTitle>{customerId ? 'Edit customer' : 'Add a customer'}</CardTitle>
               <CardDescription>
-                Encode customer details.
+                {customerId ? 'Modify customer details' : 'Encode customer details.'}
               </CardDescription>
             </CardHeader>
             <CardContent>
