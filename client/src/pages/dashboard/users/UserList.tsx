@@ -110,7 +110,7 @@ const UserList = () => {
 
 	return (
 		<DashboardLayout pageTitle="User List"> {/* Wrap content inside the layout */}
-			<div className="p-4">
+			<div className="">
 				<Settings settingsTitle="Add User">
 					<Card x-chunk="dashboard-06-chunk-0">
 						<CardHeader>
@@ -143,7 +143,7 @@ const UserList = () => {
 													className="aspect-square rounded-md object-cover"
 													height="64"
 													width="64"
-													src={`https://place-hold.it/64?text=${user.username.charAt(0)}`}
+													src={`https://placehold.co/64?text=${user.username.charAt(0)}`}
 												/>
 											</TableCell>
 											<TableCell className="font-medium">
@@ -185,7 +185,7 @@ const UserList = () => {
 						</CardContent>
 						<CardFooter>
 							<div className="text-xs text-muted-foreground">
-								Showing <strong>{users.length}</strong> of <strong>{users.length}</strong> users
+								Showing <strong>{users.length}</strong> of <strong>{users.length}</strong> user/s
 							</div>
 						</CardFooter>
 					</Card>

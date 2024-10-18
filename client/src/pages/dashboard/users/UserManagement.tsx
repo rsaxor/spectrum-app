@@ -47,18 +47,12 @@ const UserManagement = () => {
       console.error('Error adding user:', error);
     }
   };
-
-  const handleDeleteUser = async (id: string) => {
-    await axios.delete(`${apiURL}/users/${id}`);
-    setUsers(users.filter(user => user._id !== id));
-  };
-
+  
   return (
     <DashboardLayout pageTitle="Register">
-      <div className="p-4">
+      <div className="">
         <Settings settingsTitle="Add User">
           <form onSubmit={handleAddUser}>
-
             <Card x-chunk="dashboard-04-chunk-1">
               <CardHeader>
                 <CardTitle>Register a User</CardTitle>
