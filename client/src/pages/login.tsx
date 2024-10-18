@@ -15,6 +15,7 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { toast } from "../components/hooks/use-toast";
 import { Toaster } from "../components/ui/toaster";
+import Footer from '../components/Footer';
 
 const Login = () => {
     const [emailOrUsername, setEmailOrUsername] = useState('');
@@ -57,6 +58,9 @@ const Login = () => {
 
     return (
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 justify-center items-center">
+            <div className="text-center">
+                <h1><b>Spectrum App</b></h1>
+            </div>
             <Card className="w-full max-w-sm mx-auto">
                 <CardHeader>
                     <CardTitle className="text-2xl">Login</CardTitle>
@@ -93,6 +97,7 @@ const Login = () => {
                     <Toaster />
                 </CardFooter>
             </Card>
+            <Footer />
         </main>
     );
 };
