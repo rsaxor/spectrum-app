@@ -1,54 +1,20 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
-import {
-  Bell,
-  CircleUser,
-  Home,
-  LineChart,
-  Menu,
-  Package,
-  Package2,
-  Search,
-  ShoppingCart,
-  Users,
-} from "lucide-react"
-
-import { Button } from "../../components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../../components/ui/card"
-import { Input } from "../../components/ui/input"
-import { Sheet, SheetContent, SheetTrigger } from "../../components/ui/sheet"
-import { Badge } from "../../components/ui/badge"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../../components/ui/dropdown-menu"
 
 import DashboardLayout from "../../components/layouts/DashboardLayout"; // Import the layout
-
-
 
 const Dashboard = () => {
   return (
     <DashboardLayout pageTitle="Dashboard">
-      <div className="text-center h-full flex flex-col items-center justify-center">
-        <h3 className="text-2xl font-bold tracking-tight">
-          Dashboard is empty
-        </h3>
-        <p className="text-sm text-muted-foreground">
-          Coming soon!
-        </p>
+      <div className="flex flex-1 rounded-lg border border-dashed shadow-sm px-3" x-chunk="dashboard-02-chunk-1">
+        <div id="comp-load" className="w-full flex flex-col gap-1">
+          <div className="text-center h-full flex flex-col items-center justify-center">
+            <h3 className="text-2xl font-bold tracking-tight">
+              Dashboard is empty
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              Coming soon!
+            </p>
+          </div>
+        </div>
       </div>
     </DashboardLayout>
   )
