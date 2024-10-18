@@ -1,8 +1,6 @@
-// client/src/components/layouts/DashboardLayout.tsx
-
 import React from 'react';
-import Sidebar from "../../components/Sidebar"; // Import the layout
-import Header from "../../components/Header"; // Import the layout
+import Sidebar from "../../components/Sidebar";
+import Header from "../../components/Header";
 import { useLocation, Link } from 'react-router-dom';
 
 import {
@@ -15,16 +13,16 @@ import {
 } from "../../components/ui/breadcrumb";
 
 interface DashboardLayoutProps {
-	children: React.ReactNode; // This will hold the content of the subpages
+	children: React.ReactNode;
 	pageTitle: string;
 }
 
 // Utility function to convert dashed format to capitalized words
 const formatSegment = (segment: string) => {
 	return segment
-			.split('-') // Split the dashed string
-			.map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize each word
-			.join(' '); // Join words with spaces
+		.split('-') // Split the dashed string
+		.map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize each word
+		.join(' '); // Join words with spaces
 };
 
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, pageTitle }) => {
