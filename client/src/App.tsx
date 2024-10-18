@@ -7,6 +7,8 @@ import UserManagement from './pages/dashboard/users/UserManagement';
 import UserList from './pages/dashboard/users/UserList';
 import Login from './pages/login';
 import Dashboard from './pages/dashboard';
+import Customers from './pages/customers';
+import CustomerManagement from './pages/customers/CustomerManagement';
 // import About from './pages/about';
 // import NotFound from './pages/404'; // Optional: Not Found page
 
@@ -21,6 +23,9 @@ const App: React.FC = () => {
           <Route path="/dashboard/users" element={<PrivateRoute><UserManagement /></PrivateRoute>} />
           <Route path="/dashboard/users-list" element={<PrivateRoute><UserList /></PrivateRoute>} />
           <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+          <Route path="/customers" element={<PrivateRoute><Customers /></PrivateRoute>} />
+          <Route path="/customers/manage" element={<PrivateRoute><CustomerManagement /></PrivateRoute>} />
+          <Route path="/customers/manage/:customerId" element={<PrivateRoute><CustomerManagement /></PrivateRoute>} />
           <Route path="/" element={<Login />} />
         </Routes>
     </Router>
