@@ -35,7 +35,7 @@ const Header = () => {
 		// Clear the token (or any stored session data)
 		localStorage.removeItem('token'); // Assuming you're using localStorage
 		// Redirect to login page
-		navigate('/'); // Adjust the route as necessary
+		navigate('/');
 	};
 
 	return (

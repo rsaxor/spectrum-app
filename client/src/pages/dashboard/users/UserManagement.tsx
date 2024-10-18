@@ -10,8 +10,8 @@ import { Label } from "../../../components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../components/ui/select";
 import { toast } from "../../../components/hooks/use-toast";
 import { Toaster } from "../../../components/ui/toaster";
-import DashboardLayout from "../../../components/layouts/DashboardLayout"; // Import the layout
-import Settings from "../../../components/layouts/Settings"; // Import the layout
+import DashboardLayout from "../../../components/layouts/DashboardLayout";
+import Settings from "../../../components/layouts/Settings";
 
 const UserManagement = () => {
   const [users, setUsers] = useState<User[]>([]);

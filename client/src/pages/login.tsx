@@ -38,14 +38,13 @@ const Login = () => {
             // Store the token in localStorage or cookies
             localStorage.setItem('token', token);
     
-            // Optionally show a toast
             // toast({
             //     title: "Login Successful",
             //     description: `Welcome back, ${user.username}!`,
             // });
     
             // Redirect to home or dashboard
-            navigate('/dashboard');  // Adjust this route to wherever you want to redirect
+            navigate('/dashboard');
         } catch (error) {
             console.error('Error during login:', error);
             toast({

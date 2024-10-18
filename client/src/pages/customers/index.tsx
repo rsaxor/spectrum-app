@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import DashboardLayout from "../../components/layouts/DashboardLayout"; // Import the layout
+import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { Customer, NewCustomer, User } from '../../types';
 import axios from 'axios';
 import {

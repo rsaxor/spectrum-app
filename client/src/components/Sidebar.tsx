@@ -23,7 +23,7 @@ import {
 
 import { Button } from "../components/ui/button"
 import Footer from '../components/Footer';
-import { useLocation } from 'react-router-dom'; // Import useLocation hook
+import { useLocation } from 'react-router-dom'; 
 
 
 const Sidebar = () => {

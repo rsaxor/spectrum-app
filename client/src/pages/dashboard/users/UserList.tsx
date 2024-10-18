@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import DashboardLayout from "../../../components/layouts/DashboardLayout"; // Import the layout
-import Settings from "../../../components/layouts/Settings"; // Import the layout
+import DashboardLayout from "../../../components/layouts/DashboardLayout";
+import Settings from "../../../components/layouts/Settings";
 import axios from 'axios';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "../../../components/ui/card";
 import { User, NewUser } from '../../../types';
@@ -85,7 +85,7 @@ const UserList = () => {
 	};
 
 	const handleSaveChanges = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault(); // Prevent the default form submission
+		e.preventDefault();
 
 		// Create an object with the user updates
 		const updatedUser = { ...editingUser };
@@ -109,7 +109,7 @@ const UserList = () => {
 	};
 
 	return (
-		<DashboardLayout pageTitle="User List"> {/* Wrap content inside the layout */}
+		<DashboardLayout pageTitle="User List">
 			<div className="">
 				<Settings settingsTitle="Add User">
 					<Card x-chunk="dashboard-06-chunk-0">
@@ -191,8 +191,6 @@ const UserList = () => {
 					</Card>
 				</Settings>
 			</div>
-
-			{/* Dialog for editing user */}
 			{editingUser && (
 				<Dialog open={!!editingUser} onOpenChange={() => setEditingUser(null)}>
 					<DialogContent className="sm:max-w-[425px]">

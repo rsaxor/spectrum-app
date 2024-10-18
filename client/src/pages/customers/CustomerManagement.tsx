@@ -8,7 +8,7 @@ import { Label } from "../../components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
 import { toast } from "../../components/hooks/use-toast";
 import { Toaster } from "../../components/ui/toaster";
-import DashboardLayout from "../../components/layouts/DashboardLayout"; // Import the layout
+import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { useParams } from 'react-router-dom';
 
 const CustomerManagement = () => {
@@ -60,7 +60,7 @@ const CustomerManagement = () => {
           if (foundUser) {
             setSalesrep(foundUser.username);
           } else {
-            setSalesrep(''); // Or set to a default value if necessary
+            setSalesrep('');
           }
           
           if (customer.trade === 'Trade Customer' || customer.trade === 'Cash Customer' || customer.trade === 'Credit Customer') {
@@ -72,7 +72,7 @@ const CustomerManagement = () => {
       };
       fetchCustomer();
     }
-  }, [customerId, users, apiURL]); // Added users as a dependency
+  }, [customerId, users, apiURL]);
 
   const handleSaveCustomer = async (e: React.FormEvent) => {
     e.preventDefault();

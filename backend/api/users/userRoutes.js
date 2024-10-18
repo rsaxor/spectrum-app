@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../../models/User');
 const router = express.Router();
 
-// Secret for JWT (replace with environment variable in production)
+// Secret for JWT (replace with environment variable in prod)
 const JWT_SECRET = 'your_secret_key';
 
 // Create User (Registration)
@@ -50,7 +50,7 @@ router.post('/login', async (req, res) => {
 // GET /api/users
 router.get('/', async (req, res) => {
   try {
-    const users = await User.find(); // Assuming you're using MongoDB/Mongoose
+    const users = await User.find();
     res.json(users);
   } catch (error) {
     res.status(500).json({ message: error.message });

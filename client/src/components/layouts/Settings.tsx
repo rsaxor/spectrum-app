@@ -1,7 +1,5 @@
-// client/src/components/layouts/Settings.tsx
-
 import React from 'react';
-import { useLocation } from 'react-router-dom'; // Import useLocation hook
+import { useLocation } from 'react-router-dom'; 
 
 interface SettingsProps {
     children: React.ReactNode; // This will hold the content of the subpages
