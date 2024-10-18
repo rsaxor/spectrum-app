@@ -16,7 +16,7 @@ const Settings: React.FC<SettingsProps> = ({ children, settingsTitle }) => {
             <div className="mx-auto grid w-full gap-2">
                 <h2 className="text-3xl font-semibold mb-4">Settings</h2>
             </div>
-            <div className="mx-auto grid w-full items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
+            <div className="mx-auto grid w-full items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[180px_1fr]">
                 <nav className="grid gap-4 text-sm text-muted-foreground" x-chunk="dashboard-04-chunk-0">
                 <a href="/dashboard/users" className={isActive('/dashboard/users') ? 'font-semibold text-primary' : ''}>
                         Add User
@@ -24,9 +24,9 @@ const Settings: React.FC<SettingsProps> = ({ children, settingsTitle }) => {
                     <a href="/dashboard/users-list" className={isActive('/dashboard/users-list') ? 'font-semibold text-primary' : ''}>
                         User List
                     </a>
-                    <a href="#">Support</a>
+                    {/* <a href="#">Support</a>
                     <a href="#">Organizations</a>
-                    <a href="#">Advanced</a>
+                    <a href="#">Advanced</a> */}
                 </nav>
                 <div className="grid gap-6">
                     {children}

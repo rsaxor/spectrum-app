@@ -23,9 +23,12 @@ import {
 
 import { Button } from "../components/ui/button"
 import Footer from '../components/Footer';
+import { useLocation } from 'react-router-dom'; // Import useLocation hook
 
 
 const Sidebar = () => {
+    const location = useLocation(); // Get the current URL
+    const isActive = (path: string) => location.pathname.startsWith(path);
     return (
         <div className="hidden border-r bg-muted/40 md:block">
             <div className="flex h-full max-h-screen flex-col gap-2">
@@ -43,14 +46,22 @@ const Sidebar = () => {
                     <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
                         <a
                             href="/dashboard"
-                            className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
+                            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary ${isActive('/dashboard') ? 'bg-muted text-primary' : 'text-muted-foreground'}`}
+                            // className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
                         >
                             <Home className="h-4 w-4" />
                             Dashboard
                         </a>
                         <a
+                            href="/customers"
+                            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary ${isActive('/customers') ? 'bg-muted text-primary' : 'text-muted-foreground'}`}
+                        >
+                            <Users className="h-4 w-4" />
+                            Customers
+                        </a>
+                        <a
                             href="#"
-                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary ${isActive('/estimates') ? 'bg-muted text-primary' : 'text-muted-foreground'}`}
                         >
                             <LineChart className="h-4 w-4" />
                             Estimates
@@ -58,17 +69,10 @@ const Sidebar = () => {
                         </a>
                         <a
                             href="#"
-                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary ${isActive('/products') ? 'bg-muted text-primary' : 'text-muted-foreground'}`}
                         >
                             <Package className="h-4 w-4" />
                             Products{" "}
-                        </a>
-                        <a
-                            href="#"
-                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-                        >
-                            <Users className="h-4 w-4" />
-                            Customers
                         </a>
                         {/* <a href="#" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <ShoppingCart className="h-4 w-4" />Analytics</a> */}
