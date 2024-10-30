@@ -54,7 +54,7 @@ const CustomerManagement = () => {
           setAcctcode(customer.acctcode);
           setCompany(customer.company);
           setEmail(customer.email);
-          
+
           // Check if the salesrep matches any user from the fetched users
           const foundUser = users.find(user => user.username === customer.salesrep);
           if (foundUser) {
@@ -62,7 +62,7 @@ const CustomerManagement = () => {
           } else {
             setSalesrep('');
           }
-          
+
           if (customer.trade === 'Trade Customer' || customer.trade === 'Cash Customer' || customer.trade === 'Credit Customer') {
             setTrade(customer.trade);
           }
@@ -104,8 +104,22 @@ const CustomerManagement = () => {
           )
         });
       }
-    } catch (error) {
-      console.error('Error adding customer:', error);
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.error === 'Duplicate key') {
+        const message = error.response.data.message; // Get the message from the backend
+        toast({
+          title: "Error",
+          description: message, // Display the specific error message
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "An unexpected error occurred while saving the customer.",
+          variant: "destructive"
+        });
+      }
+      console.error('Error adding customer:', error.response);
     }
   };
 
