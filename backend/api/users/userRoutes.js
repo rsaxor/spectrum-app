@@ -16,7 +16,19 @@ router.post('/', async (req, res) => {
     await user.save();
     res.status(201).json(user);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    if(error.code === 11000) {
+      const duplicatedField = Object.keys(error.keyPattern)[0]; // Find which field caused the duplication
+			let errorMessage = '';
+
+			if (duplicatedField === 'username') {
+				errorMessage = 'Username already exists';
+			} else if (duplicatedField === 'email') {
+				errorMessage = 'Email already exists';
+			}
+			return res.status(400).json({ error: 'Duplicate key', message: errorMessage });
+    } else {
+      res.status(400).json({ error: error.message });
+    }
   }
 });
 

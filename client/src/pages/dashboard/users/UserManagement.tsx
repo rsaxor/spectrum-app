@@ -39,12 +39,31 @@ const UserManagement = () => {
       toast({
         title: "Successfully Added",
         description: `${email} | ${username} | ${role}`,
+        action: (
+          <Button asChild>
+            <a href="/dashboard/users-list">View</a>
+          </Button>
+        )
       });
       setEmail('');
       setUsername('');
       setPassword('');
-    } catch (error) {
-      console.error('Error adding user:', error);
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.error === 'Duplicate key') {
+        const message = error.response.data.message; // Get the message from the backend
+        toast({
+          title: "Error",
+          description: message, // Display the specific error message
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "An unexpected error occurred while saving the user.",
+          variant: "destructive"
+        });
+      }
+      console.error('Error adding user:', error.response);
     }
   };
   
